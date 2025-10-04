@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+option go_package = "Web-Labs/23/proto;calculator";
+
+message AddRequest {
+    double x = 1;
+    double y = 2;
+}
+
+message AddResponse {
+    double res = 1;
+}
+
+message SubRequest {
+    double x = 1;
+    double y = 2;
+}
+
+message SubResponse {
+    double res = 1;
+}
+
+message MultRequest {
+    double x = 1;
+    double y = 2;
+}
+
+message MultResponse {
+    double res = 1;
+}
+
+message DivRequest {
+    double x = 1;
+    double y = 2;
+}
+
+message DivResponse {
+    double res = 1;
+}
+
+message SqrtRequest {
+    double x = 1;
+}
+
+message SqrtResponse {
+    double res = 1;
+}
+
+message PercentRequest {
+    double x = 1;
+    double percent = 2;
+}
+
+message PercentResponse {
+    double res = 1;
+}
+
+message RoundRequest {
+    double x = 1;
+    int64 y = 2;
+}
+
+message RoundResponse {
+    double res = 1;
+}
+
+message PowRequest {
+    double x = 1;
+    double y = 2;
+}
+
+message PowResponse {
+    double res = 1;
+}
+
+message Operation {
+    string op = 1;
+    double value = 2;
+}
+
+message SequenceRequest {
+    double start = 1;
+    repeated Operation operations = 2;
+}
+
+message SequenceResponse {
+    double res = 1;
+}
+
+service Calculator {
+    rpc Add (AddRequest) returns (AddResponse);
+    rpc Sub (SubRequest) returns (SubResponse);
+    rpc Mult (MultRequest) returns (MultResponse);
+    rpc Div (DivRequest) returns (DivResponse);
+    rpc Sqrt (SqrtRequest) returns (SqrtResponse);
+    rpc Percent (PercentRequest) returns (PercentResponse);
+    rpc Round (RoundRequest) returns (RoundResponse);
+    rpc Pow (PowRequest) returns (PowResponse);
+    rpc Sequence (SequenceRequest) returns (SequenceResponse);
+}
