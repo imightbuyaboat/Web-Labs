@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - redis
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+  db:
+    image: postgres:latest
+    container_name: rest_postgres
+    environment:
+      POSTGRES_DB: ${SQL_DB}
+      POSTGRES_USER: ${SQL_USER}
+      POSTGRES_PASSWORD: ${SQL_PASSWORD}
+    ports:
+      - "${SQL_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+
+  redis:
+    image: redis:latest
+    container_name: rest_redis
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    ports:
+      - "${REDIS_PORT}:6379"
+
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: always
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+    - WATCHTOWER_POLL_INTERVAL=30
+    - WATCHTOWER_CLEANUP=true
+    command: --label-enable
+
+volumes:
+  postgres_data:
