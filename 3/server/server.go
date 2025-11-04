@@ -77,7 +77,7 @@ func main() {
 
 	logFileLogger.SetOutput(file)
 
-	listener, err := net.Listen("tcp", "localhost:8080")
+	listener, err := net.Listen("tcp", ":8080")
 	if err != nil {
 		log.Fatal(err)
 	}
